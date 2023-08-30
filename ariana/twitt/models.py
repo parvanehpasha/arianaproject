@@ -38,3 +38,19 @@ class ReplyPost(BaseModel):
         db_table = "reply_post"
         verbose_name = _("reply_post")
         ordering = ['-reply']
+
+
+class LikePost(BaseModel):
+    user = models.ForeignKey(User, verbose_name=_("user"), on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name=_("Post"), on_delete=models.CASCADE)
+    like = models.BooleanField(_("Like"), default=False)
+
+    def __str__(self):
+        return self.post.title
+
+    class Meta:
+        db_table = "like_post"
+        verbose_name = _("like_post")
+        ordering = ['-created']
+
+
