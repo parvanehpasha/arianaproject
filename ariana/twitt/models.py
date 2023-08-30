@@ -29,7 +29,7 @@ class ReplyPost(BaseModel):
     user = models.ForeignKey(User, verbose_name=_("user"), on_delete=models.CASCADE)
     post = models.ForeignKey(Post, verbose_name=_("Post"), on_delete=models.CASCADE)
     reply = models.TextField(_("Reply"), null=False)
-    parent_reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    parent_reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='subreply')
 
     def __str__(self):
         return self.reply
@@ -55,8 +55,8 @@ class LikePost(BaseModel):
 
 
 class FollowUser(BaseModel):
-    following = models.ForeignKey(User, verbose_name=_("user"), on_delete=models.CASCADE, related_name='following')
-    follower = models.ForeignKey(User, verbose_name=_("user"), on_delete=models.CASCADE, related_name='follower')
+    following = models.ForeignKey(User, verbose_name=_("following"), on_delete=models.CASCADE, related_name='following')
+    follower = models.ForeignKey(User, verbose_name=_("follower"), on_delete=models.CASCADE, related_name='follower')
     follow = models.BooleanField(default=False)
 
     def __str__(self):
