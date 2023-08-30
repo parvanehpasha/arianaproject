@@ -54,3 +54,15 @@ class LikePost(BaseModel):
         ordering = ['-created']
 
 
+class FollowUser(BaseModel):
+    following = models.ForeignKey(User, verbose_name=_("user"), on_delete=models.CASCADE, related_name='following')
+    follower = models.ForeignKey(User, verbose_name=_("user"), on_delete=models.CASCADE, related_name='follower')
+    follow = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.follower.username
+
+    class Meta:
+        db_table = "follow_user"
+        verbose_name = _("follow_user")
+        ordering = ['-created']
